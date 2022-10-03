@@ -24,9 +24,15 @@
  .container1{
    display: block;
    margin-left: 41%;
-   margin-right: 41%;   
+   margin-right: 41%;
+   width: 30%;   
    
  }
+.container1.button{
+    width: 20%;
+}
+
+
     input[type=text] {
         
         padding: 16px 20px;
@@ -42,7 +48,7 @@
         padding: 10px 15px;
         margin: 15px 5px;
         border-radius: 15px;
-        width: 10%;
+        width: 8%;
         border-color: rgb(43, 40, 40);
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
         float: center;
@@ -72,7 +78,10 @@
     input:hover{
         opacity: 0.8;
     }
-  
+    .btn-btn-primary{
+    color: black;
+
+}
 </style> 
 
 <body>
@@ -83,11 +92,11 @@
 <div class="container1">
 
 
-    <button style="width: 50px; background-color: rgb(98, 103, 113)  ;  margin-right: 10px; box-shadow: 5px 5px 4px 1px rgb(64, 77, 96);">
-        <a href="https://github.com/zaidasim2197" style="color: black; text-shadow: black"></a> <i class="fa fa-github" style="color: black; font-size: 15px;"></i></button>
+    <button style="width: 84px; background-color: rgb(98, 103, 113)  ;  margin-right: 10px; box-shadow: 5px 5px 4px 1px rgb(64, 77, 96);">
+    <i class="fa fa-github" style="color: black; font-size: 17px;"></i> <a href="https://github.com/zaidasim2197"class="btn btn-primary">github</a><br> </button>
     
-    <button style="width: 50px;background-color: #0072b1 ; margin-left: 10px ; box-shadow: 5px 5px 4px 1px rgb(64, 77, 96); ">
-        <a href="https://www.linkedin.com/in/zaid-asim-49a751245/" style="color: black; text-shadow: black;"></a>  <i class="fa fa-linkedin" style="color: black;  font-size: 15px;"></i></button>
+    <button style="width: 84px;background-color: #3476a9 ; margin-left: 10px ; box-shadow: 5px 5px 4px 1px rgb(64, 77, 96); ">
+    <i class="fa fa-facebook" style="color: black;  font-size: 15px;"></i><a href="https://www.facebook.com/zaid.asim.1238"class="btn btn-primary">Facebook</a></button>
     <!-- <i><h1 style=" margin-left: 38%;text-shadow: black;"><u style="color: rgb(71, 53, 53); ">"Share On Air"</u></h1></i> -->
   
     
@@ -106,7 +115,7 @@
         <button onclick="getAllTodos()">Refresh</button>
         <button onclick="getDelete()" style="width: 12% ; ">Delete All</button>
     
-        <h3 id="result"> </h3>
+        <h3 id="current"> </h3>
        
     </center>
   
@@ -118,18 +127,23 @@
         function postTodo() {
             let todoText = document.querySelector("#todo").value
 
-            axios.post(`localhost:3000/todo`, {
+            axios.post(`http://localhost:3000/todo`, {
                 text: todoText
             })
                 .then(function (response) {
+
+                    document.querySelector("#current").innerHTML =
+                `         <h3 id="result"> </h3>`              
+                
+                
                     console.log(response.data);
 
-                    document.querySelector("#result").innerHTML = ""
+                    document.querySelector("#result").innerHTML = response.data.message;
 
-                    response.data.data.map(eachTodo => {
-                        document.querySelector("#result").innerHTML += eachTodo
-                        document.querySelector("#result").innerHTML += '<br>'
-                    })
+                    // response.data.data.map(eachTodo => {
+                    //     document.querySelector("#result").innerHTML += eachTodo
+                    //     document.querySelector("#result").innerHTML += '<br>'
+                    // })
 
                 })
                 .catch(function (error) {
@@ -139,14 +153,14 @@
         }
 
         function getAllTodos() {
-            axios.get(`localhost:3000/todos`)
+            axios.get(`http://localhost:3000/todos`)
                 .then(function (response) {
                     console.log(response.data);
 
                     document.querySelector("#result").innerHTML = ""
 
                     response.data.data.map(eachTodo => {
-                        document.querySelector("#result").innerHTML = eachTodo +  document.querySelector("#result").innerHTML
+                        document.querySelector("#result").innerHTML = eachTodo.text +  document.querySelector("#result").innerHTML
                         document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
                     })
 
@@ -164,7 +178,7 @@ setInterval(getAllTodos, 700);
                     
             let code = prompt("Enter Password ")
             if (code === "123") {
-                axios.delete('localhost:3000/del')
+                axios.delete('http://localhost:3000/del')
             .then(function (response) {
                     console.log(response.data);
             

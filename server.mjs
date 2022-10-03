@@ -2,17 +2,18 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose'; 
 
-let todoschema = new mongoose.schema({
-    text: {type: String, required: true },
-    classid: String,
-    createdon:{ type: Date, default: Date.now}
-})
-const todomodel = mongoose
+
+let todoSchema = new mongoose.Schema({
+    text: { type: String, required: true },
+    classId: String,
+    createdOn: { type: Date, default: Date.now }
+});
+const todoModel = mongoose.model('todos', todoSchema);
+
 
 const app = express()
 const port = process.env.PORT || 3000;
 
-let todos = [];
 
 //   UNIFORM INTERFACE:
 
@@ -29,45 +30,60 @@ app.use(cors());         //app.use har req pr hit kry ga guzar kr jata hai
 
 app.post('/todo', (req, res) => { // post krdeta hai 
     
-    todos.push(req.body.text);
+    todoModel.create({ text: req.body.text }, (err, saved) => {
+        if (!err) {
+            console.log(saved);
 
-    todomodel.create({text:req.body.text}, (err, saved)=>{
-       if
-
-    res.send({                    //simply jo data hota hai usko 
-        message: "your todo is saved",
-        data: todos
+            res.send({
+                message: "your todo is saved"
+            })
+        } else {
+            res.status(500).send({
+                message: "server error"
+            })
+        }
     })
 })
 app.get('/todos', (req, res) => {  //simply jo data hota hai usko as it is bhej deta hai
     
-    res.send({
-        message: "here is you todo list",
-        data: todos
-    })
+  
+    todoModel.find({}, (err, data) => {
+        if (!err) {
+            res.send({
+                message: "here is you todo list",
+                data: data
+            })
+        }else{
+            res.status(500).send({
+                message: "server error"
+            })
+        }
+    });
 })
-
-
 app.delete('/del', (req, res) => {
-    todos=[]
-    res.send({
-        message: "todo is deleted",
-        data: todos
-    })
+    
+    todoModel.deleteMany({}, (err, data) => {
+        if (!err) {
+            res.send({
+                message: "Your todo is deleted",
+                data: data
+            })
+        }else{
+            res.status(500).send({
+                message: "server error"
+            })
+        }
+    });
 })
-
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
 
-var dbURI = "mongodb+srv://zaidasim2197:0900786zaid@cluster0.jl5kiyo.mongodb.net/abcddatabase?retryWrites=true&w=majority";
-// let dbURI = 'mongodb://localhost/mydatabase';
+var dbURI = "mongodb+srv://zaidasim2197:0900786zaid@cluster0.jl5kiyo.mongodb.net/abcdatabase?retryWrites=true&w=majority";
 mongoose.connect(dbURI);
-////////////////mongodb connected disconnected events///////////////////////////////////////////////
 mongoose.connection.on('connected', function () {
     console.log("Mongoose is connected");
-    // process.exit(1);
 });
 mongoose.connection.on('disconnected', function () {
     console.log("Mongoose is disconnected");
