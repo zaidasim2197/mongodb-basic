@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaid's Air Share</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<style>
+
+    body{
+        columns: auto ;  
+        font-size: 17px;
+        background-image: url("https://citrusbits.com/wp-content/uploads/2021/02/AdobeStock_305109236-scaled.jpeg")
+    }
+    * {
+        box-sizing: border-box;
+        
+    }
+    
+ .container1{
+   display: block;
+   margin-left: 41%;
+   margin-right: 41%;   
+   
+ }
+    input[type=text] {
+        
+        padding: 16px 20px;
+        margin: 10px ;
+        border-radius: 25px;
+        height: 10px;
+        border-color: #6b4646;
+    }
+
+    button {
+        background-color:  white;
+        color: rgb(0, 0, 0);
+        padding: 10px 15px;
+        margin: 15px 5px;
+        border-radius: 15px;
+        width: 10%;
+        border-color: rgb(43, 40, 40);
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        float: center;
+        cursor: pointer;
+        transition: all 0.15s;
+    
+    }
+    #ghli{
+        
+    box-shadow: 5px 5px 4px 1px rgb(64, 77, 96);
+  margin-left: 1px;
+  margin-right: 1px;
+    }
+    #result{
+        border: 2px rgb(187, 187, 187);
+        border-radius: 5px;
+      background-color: white;
+        border-style: solid;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-right: 250px;
+        margin-left: 250px;
+    }
+    button:hover{
+        opacity: 0.8;
+    }
+    input:hover{
+        opacity: 0.8;
+    }
+  
+</style> 
+
+<body>
+    
+   <div id="ghli">
+    <center><u><i><h2 style="color: rgb(232, 223, 223)  ;">"Zaid's To-Do Application"</h2></u></i></center>
+</div>
+<div class="container1">
+
+
+    <button style="width: 50px; background-color: rgb(98, 103, 113)  ;  margin-right: 10px; box-shadow: 5px 5px 4px 1px rgb(64, 77, 96);">
+        <a href="https://github.com/zaidasim2197" style="color: black; text-shadow: black"></a> <i class="fa fa-github" style="color: black; font-size: 15px;"></i></button>
+    
+    <button style="width: 50px;background-color: #0072b1 ; margin-left: 10px ; box-shadow: 5px 5px 4px 1px rgb(64, 77, 96); ">
+        <a href="https://www.linkedin.com/in/zaid-asim-49a751245/" style="color: black; text-shadow: black;"></a>  <i class="fa fa-linkedin" style="color: black;  font-size: 15px;"></i></button>
+    <!-- <i><h1 style=" margin-left: 38%;text-shadow: black;"><u style="color: rgb(71, 53, 53); ">"Share On Air"</u></h1></i> -->
+  
+    
+   
+    </div>
+   
+        <form onsubmit="postTodo(); return false">
+            
+           
+          <b style="font-size: 22px; color:rgb(232, 223, 223) ; "><u><i>Enter:</i></u></b>
+        <input id="todo" type="text" style="width: 75% ; margin-right: 15px; padding: 18px ; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);" placeholder="New Task.." >
+          <button type="submit">Add</button><center>
+            
+        </form>
+
+        <button onclick="getAllTodos()">Refresh</button>
+        <button onclick="getDelete()" style="width: 12% ; ">Delete All</button>
+    
+        <h3 id="result"> </h3>
+       
+    </center>
+  
+
+    <script>
+
+// let api = 'https://shy-gold-gorilla-sock.cyclic.app/'
+
+        function postTodo() {
+            let todoText = document.querySelector("#todo").value
+
+            axios.post(`localhost:3000/todo`, {
+                text: todoText
+            })
+                .then(function (response) {
+                    console.log(response.data);
+
+                    document.querySelector("#result").innerHTML = ""
+
+                    response.data.data.map(eachTodo => {
+                        document.querySelector("#result").innerHTML += eachTodo
+                        document.querySelector("#result").innerHTML += '<br>'
+                    })
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+
+        }
+
+        function getAllTodos() {
+            axios.get(`localhost:3000/todos`)
+                .then(function (response) {
+                    console.log(response.data);
+
+                    document.querySelector("#result").innerHTML = ""
+
+                    response.data.data.map(eachTodo => {
+                        document.querySelector("#result").innerHTML = eachTodo +  document.querySelector("#result").innerHTML
+                        document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
+                    })
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+        
+
+setInterval(getAllTodos, 700);
+
+        function getDelete() {
+         
+                    
+            let code = prompt("Enter Password ")
+            if (code === "123") {
+                axios.delete('localhost:3000/del')
+            .then(function (response) {
+                    console.log(response.data);
+            
+                })    
+                .catch((error) => {
+                console.log(error)
+            })}
+        
+        }
+    
+    </script>
+
+</body>
+
+</html>
