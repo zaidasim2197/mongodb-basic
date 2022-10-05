@@ -127,7 +127,7 @@
         function postTodo() {
             let todoText = document.querySelector("#todo").value
 
-            axios.post(`http://localhost:3000/todo`, {
+            axios.post(`https://easy-cyan-wildebeest-tux.cyclic.app/todo`, {
                 text: todoText
             })
                 .then(function (response) {
@@ -153,7 +153,7 @@
         }
 
         function getAllTodos() {
-            axios.get(`http://localhost:3000/todos`)
+            axios.get(`https://easy-cyan-wildebeest-tux.cyclic.app/todos`)
                 .then(function (response) {
                     console.log(response.data);
 
@@ -178,7 +178,7 @@ setInterval(getAllTodos, 700);
                     
             let code = prompt("Enter Password ")
             if (code === "123") {
-                axios.delete('http://localhost:3000/del')
+                axios.delete('https://easy-cyan-wildebeest-tux.cyclic.app/del')
             .then(function (response) {
                     console.log(response.data);
             
