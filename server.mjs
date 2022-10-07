@@ -35,7 +35,7 @@ app.post('/todo', (req, res) => { // post krdeta hai
             console.log(saved);
 
             res.send({
-                message: "your todo is saved"
+                message: "Wait please"
             })
         } else {
             res.status(500).send({
@@ -75,6 +75,34 @@ app.delete('/del', (req, res) => {
         }
     });
 })
+
+
+// app.put('/edit', (req, res) => {
+    
+//     todoModel.findOneAndUpdate({}, (err, data) => {
+//         if (!err) {
+//             res.send({
+//                 message: "Your todo is updated",
+//                 data: data
+//             })
+//         }else{
+//             res.status(500).send({
+//                 message: "server error"
+//             })
+//         }
+//     });
+// })
+
+
+// app.delete("/delete", (req, res) => {
+//     todoModel.deleteOne({})
+//       .then(() => {
+//         console.log("Deleted Todo Successfully!");
+//         res.redirect("/");
+//       })
+//       .catch((err) => console.log(err));
+//   });
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })

@@ -116,7 +116,9 @@
         <button onclick="getDelete()" style="width: 12% ; ">Delete All</button>
     
         <h3 id="current"> </h3>
-       
+        <button onclick="getUpdate()">Update</button>
+        <button onclick="getOnedelete()">delete</button>
+      
     </center>
   
 
@@ -186,6 +188,35 @@ setInterval(getAllTodos, 700);
                 .catch((error) => {
                 console.log(error)
             })}
+
+            function getUpdate(){
+                axios.get('http://localhost:3000/edit')
+                .then(function (response) {
+                    console.log(response.data);
+
+                    document.querySelector("#result").innerHTML = ""
+
+                    response.data.data.map(eachTodo => {
+                        document.querySelector("#result").innerHTML = eachTodo.text +  document.querySelector("#result").innerHTML
+                        document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
+                    })
+                })
+            }
+
+
+            function getOnedelete(){
+                axios.delete('http://localhost:3000/delete')
+                .then(function (response) {
+                response.data.data.map(eachTodo => {
+                         document.querySelector("#result").innerHTML = eachTodo +  document.querySelector("#result").innerHTML
+                        document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
+                    
+                })
+            })
+                .catch((error) => {
+                console.log(error)
+            })
+            }
         
         }
     
