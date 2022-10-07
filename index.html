@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zaid's Air Share</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.2/axios.min.js"></script>
 </head>
 <style>
 
@@ -116,8 +116,7 @@
         <button onclick="getDelete()" style="width: 12% ; ">Delete All</button>
     
         <h3 id="current"> </h3>
-        <button onclick="getUpdate()">Update</button>
-        <button onclick="getOnedelete()">delete</button>
+        
       
     </center>
   
@@ -189,34 +188,34 @@ setInterval(getAllTodos, 700);
                 console.log(error)
             })}
 
-            function getUpdate(){
-                axios.get('http://localhost:3000/edit')
-                .then(function (response) {
-                    console.log(response.data);
+            // function getUpdate(){
+            //     axios.get('http://localhost:3000/edit')
+            //     .then(function (response) {
+            //         console.log(response.data);
 
-                    document.querySelector("#result").innerHTML = ""
+            //         document.querySelector("#result").innerHTML = ""
 
-                    response.data.data.map(eachTodo => {
-                        document.querySelector("#result").innerHTML = eachTodo.text +  document.querySelector("#result").innerHTML
-                        document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
-                    })
-                })
-            }
+            //         response.data.data.map(eachTodo => {
+            //             document.querySelector("#result").innerHTML = eachTodo.text +  document.querySelector("#result").innerHTML
+            //             document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
+            //         })
+            //     })
+            // }
 
 
-            function getOnedelete(){
-                axios.delete('http://localhost:3000/delete')
-                .then(function (response) {
-                response.data.data.map(eachTodo => {
-                         document.querySelector("#result").innerHTML = eachTodo +  document.querySelector("#result").innerHTML
-                        document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
+            // function getOnedelete(){
+            //     axios.delete('http://localhost:3000/delete')
+            //     .then(function (response) {
+            //     response.data.data.map(eachTodo => {
+            //              document.querySelector("#result").innerHTML = eachTodo +  document.querySelector("#result").innerHTML
+            //             document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
                     
-                })
-            })
-                .catch((error) => {
-                console.log(error)
-            })
-            }
+            //     })
+            // })
+            //     .catch((error) => {
+            //     console.log(error)
+            // })
+            // }
         
         }
     
