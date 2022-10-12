@@ -116,7 +116,7 @@
         <button onclick="getDelete()" style="width: 12% ; ">Delete All</button>
     
         <h3 id="current"> </h3>
-        
+        <h3 id="message"> </h3>
       
     </center>
   
@@ -127,11 +127,12 @@
 
         function postTodo() {
             let todoText = document.querySelector("#todo").value
-
-            axios.post(`https://easy-cyan-wildebeest-tux.cyclic.app/todo`, {
+            
+            axios.post(`http://localhost:3000/todo`, {
                 text: todoText
             })
                 .then(function (response) {
+                   
 
                     document.querySelector("#current").innerHTML =
                 `         <h3 id="result"> </h3>`              
@@ -139,8 +140,14 @@
                 
                     console.log(response.data);
 
-                    document.querySelector("#result").innerHTML = response.data.message;
 
+                    getAllTodos();
+
+                    document.querySelector("#message").innerHTML = response.data.message;
+setTimeout(() =>{
+    document.querySelector("#message").innerHTML = "";
+
+}, 1000);
                     // response.data.data.map(eachTodo => {
                     //     document.querySelector("#result").innerHTML += eachTodo
                     //     document.querySelector("#result").innerHTML += '<br>'
@@ -154,7 +161,7 @@
         }
 
         function getAllTodos() {
-            axios.get(`https://easy-cyan-wildebeest-tux.cyclic.app/todos`)
+            axios.get(`http://localhost:3000/todos`)
                 .then(function (response) {
                     console.log(response.data);
 
@@ -170,16 +177,16 @@
                     console.log(error);
                 })
         }
-        
+        getAllTodos();
 
-setInterval(getAllTodos, 700);
+setInterval(getAllTodos, 5000); // use socket.io insted of setInterval
 
         function getDelete() {
          
                     
             let code = prompt("Enter Password ")
             if (code === "123") {
-                axios.delete('https://easy-cyan-wildebeest-tux.cyclic.app/del')
+                axios.delete('http://localhost:3000/del')
             .then(function (response) {
                     console.log(response.data);
             
