@@ -168,8 +168,10 @@ setTimeout(() =>{
                     document.querySelector("#result").innerHTML = ""
 
                     response.data.data.map(eachTodo => {
-                        document.querySelector("#result").innerHTML = eachTodo.text +  document.querySelector("#result").innerHTML
-                        document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
+                        document.querySelector("#result").innerHTML += eachTodo.text ;
+                        document.querySelector("#result").innerHTML += 
+                        `&nbsp;&nbsp; <button onclick="deleTodo('${eachTodo._id}')"> Delete </button>`;
+                        document.querySelector("#result").innerHTML = '<br>' 
                     })
 
                 })
@@ -195,34 +197,22 @@ setInterval(getAllTodos, 5000); // use socket.io insted of setInterval
                 console.log(error)
             })}
 
-            // function getUpdate(){
-            //     axios.get('http://localhost:3000/edit')
-            //     .then(function (response) {
-            //         console.log(response.data);
+           let deleTodo = async (id) => {
+try{
 
-            //         document.querySelector("#result").innerHTML = ""
+document.querySelector("#message").innerHTML += response.data.message;
+setTimeout(() =>{
+    document.querySelector("#message").innerHTML = "";
 
-            //         response.data.data.map(eachTodo => {
-            //             document.querySelector("#result").innerHTML = eachTodo.text +  document.querySelector("#result").innerHTML
-            //             document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
-            //         })
-            //     })
-            // }
+}, 1000);
+getAllTodos;
+            let response = await axios.delete(`http://localhost:3000/todo/${id}`)
+        }catch(error){
+            console.log("error:",error);
+        }
+        }
 
 
-            // function getOnedelete(){
-            //     axios.delete('http://localhost:3000/delete')
-            //     .then(function (response) {
-            //     response.data.data.map(eachTodo => {
-            //              document.querySelector("#result").innerHTML = eachTodo +  document.querySelector("#result").innerHTML
-            //             document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
-                    
-            //     })
-            // })
-            //     .catch((error) => {
-            //     console.log(error)
-            // })
-            // }
         
         }
     

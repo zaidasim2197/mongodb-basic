@@ -98,33 +98,24 @@ app.delete('/todo/:id', (req, res) => {
         }
     });
 })
+app.put("/todo/:id", async (req, res) => {
+    try{
+    let updated = await todoModel
+    .findByIdAndUpdate(req.params.id, {text:  req .body.text})
+    .exec();
+    console.log("updated:", data);
+    res.send ({
+        message: "Todo is updated successfully",
+        data: data
+    })
+}catch(error){
+    res.status(500).send({
+        message: "server error"
+    })
+}
+})
 
 
-// app.put('/edit', (req, res) => {
-    
-//     todoModel.findOneAndUpdate({}, (err, data) => {
-//         if (!err) {
-//             res.send({
-//                 message: "Your todo is updated",
-//                 data: data
-//             })
-//         }else{
-//             res.status(500).send({
-//                 message: "server error"
-//             })
-//         }
-//     });
-// })
-
-
-// app.delete("/delete", (req, res) => {
-//     todoModel.deleteOne({})
-//       .then(() => {
-//         console.log("Deleted Todo Successfully!");
-//         res.redirect("/");
-//       })
-//       .catch((err) => console.log(err));
-//   });
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
