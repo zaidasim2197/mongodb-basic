@@ -60,14 +60,40 @@ app.get('/todos', (req, res) => {  //simply jo data hota hai usko as it is bhej 
         }
     });
 })
+app.put('/todo/:id', async (req, res) => {
+
+    try {
+        let data = await todoModel
+            .findByIdAndUpdate(
+                req.params.id,
+                { text: req.body.text },
+                { new: true }
+            )
+            .exec();
+
+        console.log('updated: ', data);
+
+        res.send({
+            message: "todo is updated successfully",
+            data: data
+        })
+
+    } catch (error) {
+        res.status(500).send({
+            message: "server error"
+        })
+    }
+})
+
+
 app.delete('/todos', (req, res) => {
-    
+
     todoModel.deleteMany({}, (err, data) => {
         if (!err) {
             res.send({
-                message: "Your todo is deleted",
+                message: "All Todo has been deleted successfully",
             })
-        }else{
+        } else {
             res.status(500).send({
                 message: "server error"
             })
@@ -97,22 +123,6 @@ app.delete('/todo/:id', (req, res) => {
             })
         }
     });
-})
-app.put("/todo/:id", async (req, res) => {
-    try{
-    let updated = await todoModel
-    .findByIdAndUpdate(req.params.id, {text:  req .body.text})
-    .exec();
-    console.log("updated:", data);
-    res.send ({
-        message: "Todo is updated successfully",
-        data: data
-    })
-}catch(error){
-    res.status(500).send({
-        message: "server error"
-    })
-}
 })
 
 
