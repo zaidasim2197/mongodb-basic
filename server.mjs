@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose'; 
+import mongoose from 'mongoose';
+
 
 
 let todoSchema = new mongoose.Schema({
@@ -11,31 +12,22 @@ let todoSchema = new mongoose.Schema({
 const todoModel = mongoose.model('todos', todoSchema);
 
 
+
 const app = express()
 const port = process.env.PORT || 3000;
 
 
-//   UNIFORM INTERFACE:
+app.use(express.json());
+app.use(cors());
 
-//  post/todo   
-//  get /todos              get server sy get krny k liya 
-//  put /updatetodo         put is used for updating todo
-//  delete /removetodo      remove krny k liya delete lgta hai 
-//  get /todo/:id           for single get todo
+app.post('/todo', (req, res) => {
 
-// kisi ek todo k sath khelny k liya /:id daalni hogi end mai 
-
-app.use(express.json()); //body ko pass krta hai 
-app.use(cors());         //app.use har req pr hit kry ga guzar kr jata hai 
-
-app.post('/todo', (req, res) => { // post krdeta hai 
-    
     todoModel.create({ text: req.body.text }, (err, saved) => {
         if (!err) {
             console.log(saved);
 
             res.send({
-                message: "Wait please"
+                message: "your todo is saved"
             })
         } else {
             res.status(500).send({
@@ -44,22 +36,22 @@ app.post('/todo', (req, res) => { // post krdeta hai
         }
     })
 })
-app.get('/todos', (req, res) => {  //simply jo data hota hai usko as it is bhej deta hai
-    
-  
+app.get('/todos', (req, res) => {
+
     todoModel.find({}, (err, data) => {
         if (!err) {
             res.send({
                 message: "here is you todo list",
                 data: data
             })
-        }else{
+        } else {
             res.status(500).send({
                 message: "server error"
             })
         }
     });
 })
+
 app.put('/todo/:id', async (req, res) => {
 
     try {
@@ -125,10 +117,8 @@ app.delete('/todo/:id', (req, res) => {
     });
 })
 
-
-
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Server app is listening on port ${port}`)
 })
 
 
