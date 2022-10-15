@@ -154,7 +154,7 @@
 
         let baseUrl =
             (document.location.protocol === 'https:') ?
-                "https://ewewe.cyclic.app"
+                "https://tan-different-capybara.cyclic.app"
                 :
                 "http://localhost:3000";
 
@@ -165,7 +165,7 @@
             // document.querySelector("#result").innerHTML += todoText;
             // document.querySelector("#result").innerHTML += '<br>';
 
-            axios.post(`${baseUrl}/todo`, {
+            axios.post(`https://tan-different-capybara.cyclic.app/todo`, {
                 text: todoText
             })
                 .then(function (response) {
@@ -191,7 +191,7 @@
         }
 
         function getAllTodos() {
-            axios.get(`${baseUrl}/todos`)
+            axios.get(`https://tan-different-capybara.cyclic.app/todos`)
                 .then(function (response) {
                     console.log(response.data);
 
@@ -223,7 +223,7 @@
 
         let deleteTodo = async (id) => {
             try {
-                let response = await axios.delete(`${baseUrl}/todo/${id}`)
+                let response = await axios.delete(`https://tan-different-capybara.cyclic.app/todo/${id}`)
 
                 document.querySelector("#message").innerHTML = response.data.message
                 setTimeout(() => {
@@ -240,7 +240,7 @@
         }
         let deleteAllTodos = async () => {
             try {
-                let response = await axios.delete(`${baseUrl}/todos`)
+                let response = await axios.delete(`https://tan-different-capybara.cyclic.app/todos`)
 
                 document.querySelector("#message").innerHTML = response.data.message
                 setTimeout(() => {
@@ -273,7 +273,7 @@
             let updatedText = document.querySelector(`#input-${id}`).value
 
             try {
-                let response = await axios.put(`${baseUrl}/todo/${id}`,
+                let response = await axios.put(`https://tan-different-capybara.cyclic.app/todo/${id}`,
                     {
                         text: updatedText
                     })
